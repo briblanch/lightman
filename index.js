@@ -46,7 +46,7 @@ let lightmanProto = {
   pollForMidi() {
     if (this.input.getPortCount()) {
       log.debug('Opening port', this.options.midiPort);
-      this.input.openPort(0);
+      this.input.openPort(this.options.midiPort);
       this.startListening();
 
       clearInterval(this.midiPollInterval);
