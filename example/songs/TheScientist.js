@@ -11,7 +11,7 @@ let theScientist = {
       sequences: [
         {
           notes: [notes.c4, notes.f4, notes.a4], // Notes to recognize this sequence. Array of 'notes'.
-          repeats: 1, // The number of times 'notes' has to be placed before 'action' is called
+          repeats: 1, // The number of times 'notes' has to be repeated before 'action' is called
           action(seqTimesPlayed, elTimesPlayed) { // Called when 'notes' are played 'repeat' number of times
             switch (elTimesPlayed) {              // seqTimesPlayed: How many times this sequence has been repeated within the element
               case 1:                             // elTimesPlayed: How many times this sequence has been played through

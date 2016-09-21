@@ -17,7 +17,8 @@ let lightmanProto = {
   options: {
     midiPort: 0,
     configNote: notes.c8,
-    testing: false
+    testing: false,
+    onConfig() {},
   },
   initialState: {
     currentSong: null,
@@ -28,20 +29,33 @@ let lightmanProto = {
   input: null,
   output: null,
   songs: [],
+  midiPollInterval: null,
   start() {
     let options = this.options;
 
     this.input = new midi.input();
 
-    if (options.testing || this.input.getPortCount > 0) {
-      if (options.testing) {
-        log.debug('Opening virtual port');
-        this.input.openVirtualPort('Lightman virtual port');
-      } else {
-        this.input.openPort(0);
-      }
-
+    if (options.testing) {
+      log.debug('Opening virtual port');
+      this.input.openVirtualPort('Lightman virtual port');
       this.startListening();
+    } else {
+      this.pollForMidi();
+    }
+  },
+  pollForMidi() {
+    if (this.input.getPortCount()) {
+      log.debug('Opening port', this.options.midiPort);
+      this.input.openPort(0);
+      this.startListening();
+
+      clearInterval(this.midiPollInterval);
+    } else {
+      log.debug('Waiting for midi connection');
+
+      if (this.midiPollInterval == null) {
+        this.midiPollInterval = setInterval(this.pollForMidi.bind(this), 5000);
+      }
     }
   },
   startListening() {
@@ -60,13 +74,21 @@ let lightmanProto = {
 
     if (note == options.configNote) {
       log.debug('Entering config mode');
+
+      if (options.onConfig) {
+        options.onConfig();
+      }
+
+      if (state.currentBackingTrack) {
+          state.currentBackingTrack.kill();
+      }
+
       this.resetState();
       return;
     }
 
     if (state.mode == MODE.CONFIG) {
       state.noteBuffer = [...state.noteBuffer, note];
-      log.debug('in config', state.noteBuffer.length);
 
       if (state.noteBuffer.length == HOOK_LENGTH) {
         log.debug('recognizing hook');
@@ -74,7 +96,7 @@ let lightmanProto = {
 
         if (state.currentSong != null) {
           state.mode = MODE.SONG;
-          state.currentSong.startBackingTrack();
+          state.currentBackingTrack = state.currentSong.startBackingTrack();
         }
       }
     } else if (state.mode == MODE.SONG) {
