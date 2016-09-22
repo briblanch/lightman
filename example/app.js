@@ -5,6 +5,11 @@ let notes    = lightman.notes;
 
 let songsDir = __dirname + '/songs';
 
-let app = lightman.createApp(songsDir);
+const options = {
+  configNote: notes.c2,
+  testing: true
+};
+
+let app = lightman.createApp(songsDir, options);
 
 app.start();

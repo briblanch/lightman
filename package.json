@@ -28,7 +28,6 @@
   "dependencies": {
     "lodash": "^4.15.0",
     "midi": "https://github.com/justinlatimer/node-midi/tarball/master",
-    "shelljs": "^0.7.4",
     "winston": "^2.2.0"
   }
 }
