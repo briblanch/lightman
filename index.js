@@ -1,11 +1,14 @@
 'use strict';
 
 let _           = require('lodash');
-let log         = require('./lib/log');
 let midi        = require('midi');
+let process     = require('process');
+
+let log         = require('./lib/log');
 let notes       = require('./lib/notes');
 let stateful    = require('./lib/stateful');
 let songBuilder = require('./lib/song');
+
 
 const HOOK_LENGTH = 3;
 const MODE = {
@@ -80,7 +83,7 @@ let lightmanProto = {
       }
 
       if (state.currentBackingTrack) {
-          state.currentBackingTrack.kill();
+        process.kill(state.currentBackingTrack.pid, 'SIGINT');
       }
 
       this.resetState();
