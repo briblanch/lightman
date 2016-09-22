@@ -2,7 +2,7 @@
 
 let _           = require('lodash');
 let midi        = require('midi');
-let process     = require('process');
+let kill        = require('tree-kill');
 
 let log         = require('./lib/log');
 let notes       = require('./lib/notes');
@@ -83,7 +83,7 @@ let lightmanProto = {
       }
 
       if (state.currentBackingTrack) {
-        state.currentBackingTrack.kill();
+        kill(state.currentBackingTrack.pid);
       }
 
       this.resetState();

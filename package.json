@@ -28,6 +28,7 @@
   "dependencies": {
     "lodash": "^4.15.0",
     "midi": "https://github.com/justinlatimer/node-midi/tarball/master",
+    "tree-kill": "^1.1.0",
     "winston": "^2.2.0"
   }
 }
