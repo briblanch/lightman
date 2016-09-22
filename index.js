@@ -83,7 +83,7 @@ let lightmanProto = {
       }
 
       if (state.currentBackingTrack) {
-        process.kill(state.currentBackingTrack.pid, 'SIGINT');
+        state.currentBackingTrack.kill();
       }
 
       this.resetState();
