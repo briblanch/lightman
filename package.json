@@ -1,7 +1,7 @@
 {
   "name": "lightman",
-  "version": "0.0.1",
-  "description": "TODO",
+  "version": "1.0.0",
+  "description": "A node module that tracks progress through songs using midi signals",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,24 +11,30 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/briblanch/lightman-lib.git"
+    "url": "https://github.com/briblanch/lightman.git"
   },
   "keywords": [
     "midi",
     "music",
     "hue",
-    "lightman"
+    "lightman",
+    "dmx",
+    "light",
+    "lighting",
+    "automation",
+    "piano",
+    "keyboard"
   ],
   "author": "Brian Blanchard <briblanch@gmail.com> (http://briblanch.me)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/briblanch/lightman-lib/issues"
+    "url": "https://github.com/briblanch/lightman/issues"
   },
-  "homepage": "https://github.com/briblanch/lightman-lib",
+  "homepage": "https://github.com/briblanch/lightman",
   "dependencies": {
-    "lodash": "^4.15.0",
-    "midi": "https://github.com/justinlatimer/node-midi/tarball/master",
-    "tree-kill": "^1.1.0",
-    "winston": "^2.2.0"
+    "lodash": "4.15.0",
+    "midi": "0.9.5",
+    "tree-kill": "1.1.0",
+    "winston": "2.2.0"
   }
 }
