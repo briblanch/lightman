@@ -2,7 +2,6 @@
 
 let _           = require('lodash');
 let midi        = require('midi');
-let kill        = require('tree-kill');
 
 let log         = require('./lib/log');
 let notes       = require('./lib/notes');
@@ -25,7 +24,6 @@ let lightmanProto = {
   },
   initialState: {
     currentSong: null,
-    currentBackingTrack: null,
     noteBuffer: [],
     mode: MODE.CONFIG
   },
@@ -76,14 +74,14 @@ let lightmanProto = {
     let options = this.options;
 
     if (note == options.configNote) {
+      if (state.currentSong) {
+        currentSong.stopBackingTrack();
+      }
+
       log.debug('Entering config mode');
 
       if (options.onConfig) {
         options.onConfig();
-      }
-
-      if (state.currentBackingTrack) {
-        kill(state.currentBackingTrack.pid);
       }
 
       this.resetState();
@@ -99,7 +97,7 @@ let lightmanProto = {
 
         if (state.currentSong != null) {
           state.mode = MODE.SONG;
-          state.currentBackingTrack = state.currentSong.startBackingTrack();
+          state.currentSong.startBackingTrack();
         }
       }
     } else if (state.mode == MODE.SONG) {
