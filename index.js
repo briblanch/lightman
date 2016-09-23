@@ -75,7 +75,7 @@ let lightmanProto = {
 
     if (note == options.configNote) {
       if (state.currentSong) {
-        currentSong.stopBackingTrack();
+        state.currentSong.stopBackingTrack();
       }
 
       log.debug('Entering config mode');
