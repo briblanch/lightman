@@ -1,7 +1,7 @@
 'use strict';
 
-let lightman = require('../index');
-let notes    = lightman.notes;
+let Lightman = require('../index');
+let notes    = Lightman.notes;
 
 let songsDir = __dirname + '/songs';
 
@@ -10,6 +10,6 @@ const options = {
   testing: true
 };
 
-let app = lightman.createApp(songsDir, options);
+let app = Lightman.createApp(songsDir, options);
 
 app.start();
