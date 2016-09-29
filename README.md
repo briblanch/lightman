@@ -6,7 +6,7 @@
 $ npm install @briblanch/lightman --save
 ```
 ## Overview
-Lightman is a node js library that allows you perform any action when a certain note sequences are played in a song using
+Lightman is a node js library that allows you perform any action when certain note sequences are played in a song using
 a midi compatible device (keyboard, guitar, etc). Lightman is often used to control lights, but it can do anything you can put your mind to.
 
 ## Usage
