@@ -3,14 +3,15 @@
 ## Installation
 
 ```bash
-$ npm install lightman --save
+$ npm install @briblanch/lightman --save
 ```
 ## Overview
-Lightman is a nodejs library that allows you perform any action when a certain note sequences are played in a song using a midi compatible keyboard. Often the actions are controlling lights, but it can do anything you can put your mind too.
+Lightman is a node js library that allows you perform any action when a certain note sequences are played in a song using
+a midi compatible device (keyboard, guitar, etc). Lightman is often used to control lights, but it can do anything you can put your mind to.
 
 ## Usage
 ```js
-let Lightman = require('lightman');
+let Lightman = require('@briblanch/lightman');
 
 let songDir = __dirname + '/songs';
 
@@ -21,24 +22,24 @@ app.start();
 ## Explanation
 First off, there are three different parts to a song that Lightman needs to know about:
 
-1. The overall `song`.
-2. The different `elements` in a song, such as an intro, verse, chorus, bridge, etc.
-3. The different `sequences` in an element, or the notes or chords that are played.
+1. The overall `Song`.
+2. The different `Element`s in a song, such as an intro, verse, chorus, bridge, etc.
+3. The different `Sequence`s in an element, or the notes or chords that are played.
 
-Sometimes is is just better to explain things by example, so for the sake of demonstration I am going to use the song `The Scientist` by Coldplay (one of my favorites to play) to demostrate how to take different elements and sequences in a song and build them using `Lightman`.
+Sometimes is is just better to explain things by example, so for the sake of demonstration I am going to use the song `The Scientist` by Coldplay (one of my favorites to play) to demonstrate how to take different elements and sequences in a song and build them using `Lightman`.
 
 `The Scientist` consists of three different `elements`:
 
 1. The `verse` (can group the intro into the verse because the chord progression is the same)
     - Consists of the chords `Dm7`, `Bb`, `F`, and `Fsus2`
-    - Repeats twice in the song
-    - Chord `sequences` repeat 6 times within the `verse`
-    - The `chorus` is played after everytime the after the `verse` finishes
+    - Played twice throughout song
+    - Chord `Sequence`s repeat 6 times within the `verse`
+    - The `chorus` is played after the `verse`
 2. The `chorus`
-    - Consists of the chords `Bb`, `F`, and `Fsus2`. On the second time through the `chorus`the chord progression is the same       but `C` is played after the `Fsus2`
+    - Consists of the chords `Bb`, `F`, and `Fsus2`. On the second time through the `chorus`the chord progression is the same but `C` is played after the `Fsus2`
     - Played twice in the song
     - Chord `sequences` are repeated twice within the `chorus`
-    - The `verse` is played again after the first time through the `chorus` and then the `bridge` is played after the second        time through the `chorus`
+    - The `verse` is played after the first time through the `chorus`, the `bridge` is played after the second time.
 3. The `bridge`
     - Consists of the chords `Dm7`, `Bb`, and `F`
     - Played once throughout the song
@@ -48,11 +49,11 @@ Sometimes is is just better to explain things by example, so for the sake of dem
 A song object for `The Scientist` might look something like this:
 
 ```js
-let notes = require('lightman').notes;
+let notes = require('@briblanch/lightman').notes;
 
 let theScientist = {
   name: 'The Scientist', // Name of the song
-  hook: [notes.f4, notes.b4b, notes.c5], // The song hook. This is how lightman knows what song to play.
+  hook: [notes.f4, notes.b4b, notes.c5], // The song hook. This is how Lightman knows what song to play.
   startingElement: 'verse', // The starting element of the song, defaults to 'intro'
   backingTrack: __dirname + '/../backing_tracks/thescientist.mp3', // Absolute path to the backing track
   onCancel() { //
@@ -123,10 +124,11 @@ module.exports = theScientist;
 ## Docs
 ### Lightman
 #### `Modes`
-- `CONFIG` - Lightman is waiting to be told what song to listen for. Listens for a three note riff corresponding to a `Song`s `hook` property. After 3 notes are hit and a song is not recognized, the `configNote` must be hit again to attempt to recognized a `Song`'s hook.
+- `CONFIG` - Lightman is waiting to be told what song to listen for. Listens for a three note riff corresponding to a `Song`s `hook` property.
+   After 3 notes are hit and a song is not recognized, the `configNote` must be hit again to do attempt another recognition attempt.
 - `SONG` - Lightman is currently tracking progress through a song.
 
-**Note**: Lightman is lauched in `CONFIG` mode
+**Note**: Lightman is launched in `CONFIG` mode
 
 #### `notes`
 ```js
@@ -152,7 +154,7 @@ let app = Lightman.createApp(songsOrDir[, options]);
 Creates an instance of Lightman
 - `songsOrDir:<Array|String>` - Either an array of `Song` objects or the directory where all the song objects are.
 - `Options:<Object>` - An object of options.
-    - `configNote:<note>` - The note that puts lightman in `CONFIG` mode. *Default*: `notes.c8`
+    - `configNote:<note>` - The note that puts Lightman in `CONFIG` mode. *Default*: `notes.c8`
     - `onConfig()` - The function that is called when the app is put into `CONFIG` mode.
     - `midiPort:<Int>`: The midi port to open. *Default*: `0`.
     - `testing<Boolean>`: When true, Lightman will open a virtual port instead of a hardware port. *Default*: `false`
@@ -176,8 +178,8 @@ The overarching song object.
 
 ### Element
 #### Properties
-- `repeats:<Int|Array<Int>>` - An integer or array of integers that tells Lightman how many times to repeat the element. If it is an integer, Lightman will repeat the element that many times every time the element is played. If it is an array, Lightman will repeat the number of each index in the array in order. For example, `repeats: [2, 3]` would repeat 2 times the the first time the elment is played and 3 times the second time the element is played.
-- `nextElement:<String:Array<String>>` - The key or keys of element(s) to play after the current element is finshed. If it is a String, Lightman will play the element specified everytime after the current element finishes. If it is an array, Lightman will play the specified next elements in order everytime the element is played. If the number of times the element has been played exceeds the length of the array, the song is over.
+- `repeats:<Int|Array<Int>>` - An integer or array of integers that tells Lightman how many times to repeat the element. If it is an integer, Lightman will repeat the element that many times every time the element is played. If it is an array, Lightman will repeat the number of each index in the array in order. For example, `repeats: [2, 3]` would repeat 2 times the the first time the element is played and 3 times the second time the element is played.
+- `nextElement:<String:Array<String>>` - The key or keys of element(s) to play after the current element is finished. If it is a String, Lightman will play the element specified every time after the current element finishes. If it is an array, Lightman will play the specified next elements in order every time the element is played. If the number of times the element has been played exceeds the length of the array, the song is over.
 - `sequences:<Array<Sequence>>` - An array of `Sequence`s in order they are played throughout the parent element.
 - `onEnd(timesPlayed)` - A function that is called when the element has finished playing.
     - `timesPlayed:<Int>` -  The number of times that element has been played. This is zero based so after the first time an         element has been played, `timesPlayed` will be `0`.
@@ -185,7 +187,7 @@ The overarching song object.
 ### Sequence
 #### Properties
 - `notes:<Array<Note>>` -  An array of notes that Lightman listens.
-- `repeats:<Int|Array<Int>>` - An integer or array of integers that tells Lightman how many times `notes` must be repeated before the sequence is recognized. If it is an integer, Lightman will wait to recognized the sequence that many times every time the sequence is played. If it is an array, Lightman will wait to recognized the sequence untill the value in the array, in order. For example, `repeats: [2, 3]` would wait to recognized the sequence till it has been played 2 times the first time the sequence is played and 3 times the second time the sequence is played.
+- `repeats:<Int|Array<Int>>` - An integer or array of integers that tells Lightman how many times `notes` must be repeated before the sequence is recognized. If it is an integer, Lightman will wait to recognized the sequence that many times every time the sequence is played. If it is an array, Lightman will wait to recognized the sequence until the value in the array, in order. For example, `repeats: [2, 3]` would wait to recognized the sequence till it has been played 2 times the first time the sequence is played and 3 times the second time the sequence is played.
 - `action(seqTimesPlayed, elTimesPlayed)` - The function that is called when `notes` is recognized `repeats` times.
     - `seqTimesPlayed:<Int>` - The number of times the sequence has been repeated in the current playing of the parent element.
     - `elTimesPlayed:<Int>` - The number of times the parent element has been played throughout the whole song.
