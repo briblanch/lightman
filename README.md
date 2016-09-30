@@ -121,6 +121,9 @@ module.exports = theScientist;
 
 ```
 
+## Example
+To see Lightman working in a complete application, checkout my other project [Lightshow](https://github.com/briblanch/lightshow)!
+
 ## Docs
 ### Lightman
 #### `Modes`
