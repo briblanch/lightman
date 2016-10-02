@@ -1,6 +1,6 @@
 {
   "name": "@briblanch/lightman",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A node module that tracks progress through songs using midi signals",
   "main": "index.js",
   "scripts": {
