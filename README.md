@@ -1,5 +1,7 @@
 ![logo](https://raw.githubusercontent.com/briblanch/lightman/master/lightman-logo.png)
 
+### To see an example of an end product watch this [video](https://youtu.be/LvUldxdb4Ek)
+
 ## Installation
 
 ```bash
